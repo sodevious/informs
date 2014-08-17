@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'front'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,8 +55,14 @@ WSGI_APPLICATION = 'informs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'informs',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',                      # Set to empty string for localhost.
+        'PORT': '',                      # Set to empty string for default.
+
+        'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'}
     }
 }
 
@@ -70,6 +77,17 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/dev/howto/static-files/
+# https://docs.djangoproject.com/en/1.6/howto/static-files/
+APPS_ROOT = os.path.dirname(os.path.realpath(os.path.dirname(__file__)))
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(APPS_ROOT, 'static')
+
+# The directory containing the Muck Rack code
+# e.g. /home/www/muckrack/src/muckrack
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    APPS_ROOT + '/templates',
+)
